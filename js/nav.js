@@ -34,3 +34,22 @@ function updateNavOnLogin() {
   $navLogOut.show();
   $navUserProfile.text(`${currentUser.username}`).show();
 }
+
+/* Show the submit form on click of "submit" */
+
+function submitLinkClick(evt) {
+  console.debug("submitLinkClick", evt);
+  $submitForm.show();
+}
+
+$navSubmit.on("click", submitLinkClick);
+
+/* Show the favorites list of stories */
+
+function favoritesLinkClick(e) {
+  console.debug("favoritesLinkClick", e);
+  
+  putFavoritesOnPage();
+}
+
+$navFavorites.on("click", favoritesLinkClick);

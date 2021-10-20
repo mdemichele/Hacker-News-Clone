@@ -74,7 +74,9 @@ class StoryList {
    */
 
   async addStory(currentUser, newStory) {
-    
+    console.debug("addStory");
+    console.log(currentUser);
+    console.log(newStory);
     // Send story to /stories endpoint 
     const response = await axios({
       method: 'POST',
@@ -207,6 +209,50 @@ class User {
       );
     } catch (err) {
       console.error("loginViaStoredCredentials failed", err);
+      return null;
+    }
+  }
+  
+  /* Add a story to a user's favorite list */
+  async addFavorite(story) {
+    // Add favorite to correct endpoint 
+    try {
+      const response = await axios({
+        url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
+        method: "POST",
+        data: {
+          token: this.loginToken,
+        }
+      });
+      
+      console.log(response);
+      return null;
+      
+    } catch (err) {
+      console.error("Add Favorite failed: ", err);
+      return null;
+    }
+  }
+  
+  /* Remove a story from a user's favorite list */
+  async removeFavorite(story) {
+    // Send delete request to correct endpoint 
+    try {
+      const response = await axios({
+        url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
+        method: "DELETE",
+        data: {
+          token: this.loginToken,
+        }
+      });
+      
+      // Response received is the new user
+      console.log(response); 
+      
+      return null;
+      
+    } catch (err) {
+      console.error("Remove Favorite failed: ", err);
       return null;
     }
   }
